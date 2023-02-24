@@ -1,0 +1,144 @@
+local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
+local Window = Library.CreateLib("FENCING HUB", "Ocean")
+local Tab = Window:NewTab("Main")
+local Section = Tab:NewSection("Main")
+Section:NewButton("Car (CLICK INFO TO SHOW NAME CAR)", "Elitoria RN750", function()
+if game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").RigType == Enum.HumanoidRigType.R6 then
+ 
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").WalkSpeed = 60
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").JumpPower = 20
+game:GetService("Players").LocalPlayer.Character.Animate.walk.WalkAnim.AnimationId = "rbxassetid://129342287"
+game:GetService("Players").LocalPlayer.Character.Animate.run.RunAnim.AnimationId = "rbxassetid://129342287"
+game:GetService("Players").LocalPlayer.Character.Animate.fall.FallAnim.AnimationId = "rbxassetid://129342287"
+game:GetService("Players").LocalPlayer.Character.Animate.idle.Animation1.AnimationId = "rbxassetid://129342287"
+game:GetService("Players").LocalPlayer.Character.Animate.idle.Animation2.AnimationId = "rbxassetid://129342287"
+game:GetService("Players").LocalPlayer.Character.Animate.jump.JumpAnim.AnimationId = "rbxassetid://129342287"
+for i, thing in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+if thing.ClassName == "Part" then
+thing.CustomPhysicalProperties = PhysicalProperties.new(0.04, 0, 0)
+end
+end
+local r6height = "-1.03"
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").HipHeight = r6height
+ 
+elseif game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").RigType == Enum.HumanoidRigType.R15 then
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").WalkSpeed = 60
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").JumpPower = 20
+game:GetService("Players").LocalPlayer.Character.Animate.walk.WalkAnim.AnimationId = "rbxassetid://3360694441"
+game:GetService("Players").LocalPlayer.Character.Animate.run.RunAnim.AnimationId = "rbxassetid://3360694441"
+game:GetService("Players").LocalPlayer.Character.Animate.fall.FallAnim.AnimationId = "rbxassetid://3360694441"
+game:GetService("Players").LocalPlayer.Character.Animate.idle.Animation1.AnimationId = "rbxassetid://3360694441"
+game:GetService("Players").LocalPlayer.Character.Animate.idle.Animation2.AnimationId = "rbxassetid://3360694441"
+game:GetService("Players").LocalPlayer.Character.Animate.jump.JumpAnim.AnimationId = "rbxassetid://3360694441"
+for i, thing in pairs(game:GetService("Players").LocalPlayer.Character:GetDescendants()) do
+if thing.ClassName == "MeshPart" then
+thing.CustomPhysicalProperties = PhysicalProperties.new(0.04, 0, 0)
+end
+end
+local r15height = "0.56"
+game:GetService("Players").LocalPlayer.Character:FindFirstChildWhichIsA("Humanoid").HipHeight = r15height
+end
+end)
+Section:NewButton("SyntaxV2 (KEY: Syntaxbesthub)", "v2", function()
+    loadstring(game:HttpGet(('https://raw.githubusercontent.com/Vallater/SyntaxV2/b7a88a7b84174e3c2220c7a8ca477e40699ddd2c/Syntaxontop'),true))()
+end)
+Section:NewButton("Anti-Fling", "ur not fling anymore", function()
+    -- // Constants \\ --
+-- [ Services ] --
+local Services = setmetatable({}, {__index = function(Self, Index)
+local NewService = game.GetService(game, Index)
+if NewService then
+Self[Index] = NewService
+end
+return NewService
+end})
+
+-- [ LocalPlayer ] --
+local LocalPlayer = Services.Players.LocalPlayer
+
+-- // Functions \\ --
+local function PlayerAdded(Player)
+   local Detected = false
+   local Character;
+   local PrimaryPart;
+
+   local function CharacterAdded(NewCharacter)
+       Character = NewCharacter
+       repeat
+           wait()
+           PrimaryPart = NewCharacter:FindFirstChild("HumanoidRootPart")
+       until PrimaryPart
+       Detected = false
+   end
+
+   CharacterAdded(Player.Character or Player.CharacterAdded:Wait())
+   Player.CharacterAdded:Connect(CharacterAdded)
+   Services.RunService.Heartbeat:Connect(function()
+       if (Character and Character:IsDescendantOf(workspace)) and (PrimaryPart and PrimaryPart:IsDescendantOf(Character)) then
+           if PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 or PrimaryPart.AssemblyLinearVelocity.Magnitude > 100 then
+               if Detected == false then
+                   game.StarterGui:SetCore("ChatMakeSystemMessage", {
+                       Text = "Fling Exploit detected, Player: " .. tostring(Player);
+                       Color = Color3.fromRGB(255, 200, 0);
+                   })
+               end
+               Detected = true
+               for i,v in ipairs(Character:GetDescendants()) do
+                   if v:IsA("BasePart") then
+                       v.CanCollide = false
+                       v.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+                       v.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+                       v.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+                   end
+               end
+               PrimaryPart.CanCollide = false
+               PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+               PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+               PrimaryPart.CustomPhysicalProperties = PhysicalProperties.new(0, 0, 0)
+           end
+       end
+   end)
+end
+
+-- // Event Listeners \\ --
+for i,v in ipairs(Services.Players:GetPlayers()) do
+   if v ~= LocalPlayer then
+       PlayerAdded(v)
+   end
+end
+Services.Players.PlayerAdded:Connect(PlayerAdded)
+
+local LastPosition = nil
+Services.RunService.Heartbeat:Connect(function()
+   pcall(function()
+       local PrimaryPart = LocalPlayer.Character.PrimaryPart
+       if PrimaryPart.AssemblyLinearVelocity.Magnitude > 250 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 250 then
+           PrimaryPart.AssemblyAngularVelocity = Vector3.new(0, 0, 0)
+           PrimaryPart.AssemblyLinearVelocity = Vector3.new(0, 0, 0)
+           PrimaryPart.CFrame = LastPosition
+
+           game.StarterGui:SetCore("ChatMakeSystemMessage", {
+               Text = "You were flung. Neutralizing velocity.";
+               Color = Color3.fromRGB(255, 0, 0);
+           })
+       elseif PrimaryPart.AssemblyLinearVelocity.Magnitude < 50 or PrimaryPart.AssemblyAngularVelocity.Magnitude > 50 then
+           LastPosition = PrimaryPart.CFrame
+       end
+   end)
+end)
+end)
+Section:NewButton("Sussy Hub", "Ur a really Sexy", function()
+ loadstring(game:HttpGet(('https://gist.githubusercontent.com/Nilrogram/8b0c8bd710be142f383c71f79279752c/raw/e4fb01a7de7cd498bb53270d2ad191dfab268a88/FE%2520SussyHub'),true))();
+end)
+Section:NewButton("Bypass CHAT MAIN", "Bypass", function()
+loadstring(game:HttpGet(('https://raw.githubusercontent.com/vqmpjay/chatbypasser/main/chatbypasserv1'),true))()
+end)
+
+local Tab = Window:NewTab("Update will be more in soon")
+local Section = Tab:NewSection("Update will be more in soon")
+
+local Tab = Window:NewTab("Toggle UI")
+local Section = Tab:NewSection("Toggle UI")
+Section:NewKeybind("Toggle UI", "Toggle UI Hub", Enum.KeyCode.F, function()
+	Library:ToggleUI()
+end)
